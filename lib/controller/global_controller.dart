@@ -44,6 +44,7 @@ class GlobalController extends GetxController {
       lattittude.value = value.latitude;
       longittude.value = value.longitude;
       isLoading.value = false;
+
     });
   }
 }

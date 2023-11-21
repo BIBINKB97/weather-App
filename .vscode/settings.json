@@ -3,5 +3,7 @@
         "other": "inline"
     },
     "editor.acceptSuggestionOnEnter": "smart",
-    "editor.inlineSuggest.enabled": true
+    "editor.inlineSuggest.enabled": true,
+    "emmet.useInlineCompletions": true
+    
 }
