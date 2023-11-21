@@ -9,6 +9,7 @@ class GlobalController extends GetxController {
   RxDouble getLattittude() => lattittude;
   RxDouble getLongittude() => longittude;
 
+  @override
   void onInit() {
     if (isLoading.isTrue) {
       getLocation();
@@ -18,10 +19,31 @@ class GlobalController extends GetxController {
 
   getLocation() async {
     bool isServiceEnabled;
+    LocationPermission locationPermission;
+
     isServiceEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!isServiceEnabled) {
-      return Future.error("location maariyappo , ellam oke aaayil,");
+      return Future.error("location not enabled");
     }
+    // status of Permission
+    locationPermission = await Geolocator.checkPermission();
+
+    if (locationPermission == LocationPermission.denied) {
+      return Future.error("Location permission are denied forever");
+    } else if (locationPermission == LocationPermission.denied) {
+      // request Premission
+      locationPermission = await Geolocator.requestPermission();
+      if (locationPermission == LocationPermission.denied) {
+        return Future.error('Location premission is denied');
+      }
+    }
+    return await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high)
+        .then((value) {
+      lattittude.value = value.latitude;
+      longittude.value = value.longitude;
+      isLoading.value = false;
+    });
   }
 }
