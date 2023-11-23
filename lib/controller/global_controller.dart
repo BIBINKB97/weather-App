@@ -5,6 +5,8 @@ class GlobalController extends GetxController {
   final RxBool isLoading = true.obs;
   final RxDouble lattittude = 0.0.obs;
   final RxDouble longittude = 0.0.obs;
+
+
   RxBool checkLoading() => isLoading;
   RxDouble getLattittude() => lattittude;
   RxDouble getLongittude() => longittude;
@@ -29,7 +31,7 @@ class GlobalController extends GetxController {
     // status of Permission
     locationPermission = await Geolocator.checkPermission();
 
-    if (locationPermission == LocationPermission.denied) {
+    if (locationPermission == LocationPermission.deniedForever) {
       return Future.error("Location permission are denied forever");
     } else if (locationPermission == LocationPermission.denied) {
       // request Premission
@@ -38,6 +40,7 @@ class GlobalController extends GetxController {
         return Future.error('Location premission is denied');
       }
     }
+   //getting the current position
     return await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high)
         .then((value) {
