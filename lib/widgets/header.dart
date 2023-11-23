@@ -24,12 +24,20 @@ class _HeaderState extends State<Header> {
 
   getAddress(lat, lon) async {
     List<Placemark> placemark = await placemarkFromCoordinates(lat, lon);
+    Placemark place = placemark[0];
+    setState(() {
+      city = place.locality!;
+    });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [],
+      children: [
+        Container(
+          child: Text(city),
+        )
+      ],
     );
   }
 }

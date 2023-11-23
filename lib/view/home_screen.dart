@@ -8,18 +8,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalController globalController   =
+    final GlobalController globalController =
         Get.put(GlobalController(), permanent: true);
     return Scaffold(
-    body: SafeArea(child: 
-    Obx(() => globalController.checkLoading().isTrue ? Center(child: CircularProgressIndicator(),):ListView(
-      scrollDirection: Axis.vertical,
-      children: [
-        Header()
-      ],
-    ))
-    ),
+      body: SafeArea(
+          child: Obx(() => globalController.checkLoading().isTrue
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [Header()],
+                ))),
     );
   }
 }
-
