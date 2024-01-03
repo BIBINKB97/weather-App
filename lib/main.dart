@@ -15,14 +15,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weather App',
       theme: ThemeData(
-
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.transparent,
           elevation:0,
         ),
-
-
-
+        
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
