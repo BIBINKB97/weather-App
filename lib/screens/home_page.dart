@@ -101,16 +101,139 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 100,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    
-                  ],
-                )
-              ],
+          Align(
+            alignment: Alignment(0, 0.5),
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.black.withOpacity(0.4)),
+              height: 150,
+              width: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/temperature-high.png',
+                            height: 55,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                data: 'Temp Max',
+                                color: Colors.white,
+                                fw: FontWeight.w600,
+                                size: 14,
+                              ),
+                              AppText(
+                                data: ' 21 °C ',
+                                color: Colors.white,
+                                fw: FontWeight.w600,
+                                size: 14,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/temperature-high.png',
+                            height: 55,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                data: 'Temp Min',
+                                color: Colors.white,
+                                fw: FontWeight.w600,
+                                size: 14,
+                              ),
+                              AppText(
+                                data: ' 21 °C ',
+                                color: Colors.white,
+                                fw: FontWeight.w600,
+                                size: 14,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    indent: 20,
+                    endIndent: 20,
+                    thickness: 1.5,
+                    color: Colors.white,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/temperature-high.png',
+                            height: 55,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                data: 'Temp Max',
+                                color: Colors.white,
+                                fw: FontWeight.w600,
+                                size: 14,
+                              ),
+                              AppText(
+                                data: ' 21 °C ',
+                                color: Colors.white,
+                                fw: FontWeight.w600,
+                                size: 14,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/temperature-high.png',
+                            height: 55,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                data: 'Temp Min',
+                                color: Colors.white,
+                                fw: FontWeight.w600,
+                                size: 14,
+                              ),
+                              AppText(
+                                data: ' 21 °C ',
+                                color: Colors.white,
+                                fw: FontWeight.w600,
+                                size: 14,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           )
         ]),
