@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/data/image_path.dart';
 import 'package:weather_app/utils/apptext.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool showSearchField = false;
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
@@ -62,7 +69,11 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        showSearchField = !showSearchField;
+                      });
+                    },
                     icon: Icon(
                       Icons.search,
                       size: 32,
@@ -70,6 +81,24 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
+          showSearchField == true
+              ? Positioned(
+                  top: 50,
+                  left: 20,
+                  right: 20,
+                  child: SizedBox(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ))
+              : SizedBox.shrink(),
           Align(
               alignment: Alignment(0, -0.7), child: Image.asset(imagePath[6])),
           Align(
