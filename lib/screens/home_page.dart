@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   child: Row(
                     children: [
                       Icon(
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                     onPressed: () {
                       setState(() {
-                        showSearchField = !showSearchField;
+                        showSearchField = true;
                       });
                     },
                     icon: Icon(
