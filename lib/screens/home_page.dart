@@ -3,14 +3,14 @@ import 'package:weather_app/data/image_path.dart';
 import 'package:weather_app/utils/apptext.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  bool showSearchField = false;
+  bool _clicked = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -18,10 +18,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       body: Container(
         padding: EdgeInsets.only(top: 40, right: 20, bottom: 20, left: 20),
         height: size.height,
@@ -69,19 +65,20 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showSearchField = true;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.search,
-                      size: 32,
-                    ))
+                  icon: Icon(
+                    Icons.search,
+                    size: 32,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _clicked = !_clicked;
+                    });
+                  },
+                )
               ],
             ),
           ),
-          showSearchField == true
+          _clicked == true
               ? Positioned(
                   top: 50,
                   left: 20,
@@ -98,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ))
-              : SizedBox.shrink(),
+              : Container(),
           Align(
               alignment: Alignment(0, -0.7), child: Image.asset(imagePath[6])),
           Align(
