@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/screens/home_page.dart';
 
 void main() {
@@ -11,19 +12,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Weather App',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          iconTheme: IconThemeData(color: Colors.white ),
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
+    return MultiProvider(
+      providers: [
+
         
-        home: HomePage());
+      ],
+      child: MaterialApp(
+          title: 'Weather App',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            iconTheme: IconThemeData(color: Colors.white ),
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          
+          home: HomePage()),
+    );
   }
 }
