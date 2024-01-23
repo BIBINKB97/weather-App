@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/data/image_path.dart';
+import 'package:weather_app/services/location_provider.dart';
 import 'package:weather_app/utils/apptext.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,6 +12,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    Provider.of<LocationProvider>(context, listen: false).determinePosition();
+    super.initState();
+  }
+
   bool _clicked = false;
   @override
   Widget build(BuildContext context) {
@@ -54,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                             fw: FontWeight.w700,
                           ),
                           AppText(
-                            data: 'Good Morning', 
+                            data: 'Good Morning',
                             color: Colors.white,
                             size: 14,
                             fw: FontWeight.w400,
@@ -170,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           Image.asset(
-                            'assets/img/temperature-high.png',
+                            'assets/img/temperature-low.png',
                             height: 55,
                           ),
                           Column(
@@ -207,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           Image.asset(
-                            'assets/img/temperature-high.png',
+                            'assets/img/sun.png',
                             height: 55,
                           ),
                           Column(
@@ -233,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           Image.asset(
-                            'assets/img/temperature-high.png',
+                            'assets/img/moon.png',
                             height: 55,
                           ),
                           Column(
