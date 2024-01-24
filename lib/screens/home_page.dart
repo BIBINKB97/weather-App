@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final locationProvider = Provider.of<LocationProvider>(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -37,55 +38,60 @@ class _HomePageState extends State<HomePage> {
         )),
         child: Stack(children: [
           SizedBox(
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.location_pin,
-                        color: Colors.red,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              height: 50,
+              child: Consumer<LocationProvider>(
+                  builder: (context, locationProvider, widget) {
+                final locationCity =
+                    locationProvider.currentLocationName!.locality 
+                        ;
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      child: Row(
                         children: [
-                          AppText(
-                            data: 'Dubai',
-                            color: Colors.white,
-                            size: 18,
-                            fw: FontWeight.w700,
+                          Icon(
+                            Icons.location_pin,
+                            color: Colors.red,
                           ),
-                          AppText(
-                            data: 'Good Morning',
-                            color: Colors.white,
-                            size: 14,
-                            fw: FontWeight.w400,
+                          SizedBox(
+                            width: 10,
                           ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                data: locationCity,
+                                color: Colors.white,
+                                size: 18,
+                                fw: FontWeight.w700,
+                              ),
+                              AppText(
+                                data: 'Good Morning',
+                                color: Colors.white,
+                                size: 14,
+                                fw: FontWeight.w400,
+                              ),
+                            ],
+                          )
                         ],
-                      )
-                    ],
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    size: 32,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _clicked = !_clicked;
-                    });
-                  },
-                )
-              ],
-            ),
-          ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.search,
+                        size: 32,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _clicked = !_clicked;
+                        });
+                      },
+                    )
+                  ],
+                );
+              })),
           _clicked == true
               ? Positioned(
                   top: 50,
