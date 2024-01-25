@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final locationProvider = Provider.of<LocationProvider>(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -41,9 +40,13 @@ class _HomePageState extends State<HomePage> {
               height: 50,
               child: Consumer<LocationProvider>(
                   builder: (context, locationProvider, widget) {
-                final locationCity =
-                    locationProvider.currentLocationName!.locality 
-                        ;
+                var locationCity;
+                if (locationProvider.currentLocationName != null) {
+                  locationCity = locationProvider.currentLocationName!.locality;
+                }else{
+                  locationCity = "Unknown Location";
+                }
+
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
