@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/data/image_path.dart';
 import 'package:weather_app/services/location_provider.dart';
+import 'package:weather_app/services/weather_service_provider.dart';
 import 'package:weather_app/utils/apptext.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +16,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     Provider.of<LocationProvider>(context, listen: false).determinePosition();
+    Provider.of<WeatherServiceProvider>(context, listen: false)
+        .fetchWeatherDateByCity("dubai");
+
     super.initState();
   }
 
@@ -43,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 var locationCity;
                 if (locationProvider.currentLocationName != null) {
                   locationCity = locationProvider.currentLocationName!.locality;
-                }else{
+                } else {
                   locationCity = "Unknown Location";
                 }
 
