@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class WeatherServiceProvider extends ChangeNotifier {
   WeatherModel? _weather;
+
   WeatherModel? get weather => _weather;
 
   bool _isLoading = false;
@@ -39,7 +40,6 @@ class WeatherServiceProvider extends ChangeNotifier {
     } finally {
       _isLoading = false;
       notifyListeners();
-
     }
   }
 }
