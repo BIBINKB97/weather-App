@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
 
     super.initState();
   }
-
+ 
   bool _clicked = false;
   @override
   Widget build(BuildContext context) {
@@ -340,6 +340,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         IconButton(
                             onPressed: () {
+                              print(_cityController.text);
                               weatherProvider
                                   .fetchWeatherDateByCity(_cityController.text);
                             },
