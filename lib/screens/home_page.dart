@@ -44,6 +44,15 @@ class _HomePageState extends State<HomePage> {
     final locationProvider = Provider.of<LocationProvider>(context);
     final weatherProvider = Provider.of<WeatherServiceProvider>(context);
 
+    int sunriseTimeStap = weatherProvider.weather?.sys?.sunrise ?? 0;
+    int sunsetTimeStap = weatherProvider.weather?.sys?.sunset ?? 0;
+
+    DateTime sunriseDateTime =
+        DateTime.fromMicrosecondsSinceEpoch(sunriseTimeStap);
+
+    DateTime sunsetDateTime =
+        DateTime.fromMicrosecondsSinceEpoch(sunsetTimeStap);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
@@ -137,7 +146,7 @@ class _HomePageState extends State<HomePage> {
           Align(
               alignment: Alignment(0, -0.7),
               child: Image.asset(imagePath[
-                      weatherProvider.weather!.weather![0].main ?? "N/A"] ??
+                      weatherProvider.weather?.weather![0].main ?? "N/A"] ??
                   "assets/img/drizzle.png")),
           Align(
             alignment: Alignment(0, 0),
@@ -155,13 +164,13 @@ class _HomePageState extends State<HomePage> {
                     size: 32,
                   ),
                   AppText(
-                    data: weatherProvider.weather!.weather![0].main,
+                    data: weatherProvider.weather!.name ?? "N/A",
                     color: Colors.white,
                     fw: FontWeight.w600,
                     size: 22,
                   ),
                   AppText(
-                    data: "",
+                    data: weatherProvider.weather!.weather![0].main ?? "N/A",
                     color: Colors.white,
                     fw: FontWeight.w600,
                     size: 26,
@@ -207,7 +216,8 @@ class _HomePageState extends State<HomePage> {
                                 size: 14,
                               ),
                               AppText(
-                                data: ' 21 °C ',
+                                data:
+                                    "${weatherProvider.weather?.main!.tempMax?.toStringAsFixed(0) ?? "N/A"}\u00B0 C",
                                 color: Colors.white,
                                 fw: FontWeight.w600,
                                 size: 14,
@@ -233,7 +243,8 @@ class _HomePageState extends State<HomePage> {
                                 size: 14,
                               ),
                               AppText(
-                                data: ' 21 °C ',
+                                data:
+                                    "${weatherProvider.weather?.main!.tempMin?.toStringAsFixed(0) ?? "N/A"}\u00B0 C",
                                 color: Colors.white,
                                 fw: FontWeight.w600,
                                 size: 14,
@@ -264,13 +275,14 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AppText(
-                                data: 'Temp Max',
+                                data: 'Sunrise',
                                 color: Colors.white,
                                 fw: FontWeight.w600,
                                 size: 14,
                               ),
                               AppText(
-                                data: ' 21 °C ',
+                                data:
+                                    "${weatherProvider.weather?.sys?.sunrise ?? "N/A"}",
                                 color: Colors.white,
                                 fw: FontWeight.w600,
                                 size: 14,
