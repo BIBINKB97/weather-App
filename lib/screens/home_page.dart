@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/data/image_path.dart';
 import 'package:weather_app/services/location_provider.dart';
@@ -15,9 +16,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    Provider.of<LocationProvider>(context, listen: false).determinePosition();
-    Provider.of<WeatherServiceProvider>(context, listen: false)
-        .fetchWeatherDateByCity("dubai");
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
+
+    locationProvider.determinePosition().then((_) {
+      if (locationProvider.currentLocationName != null) {
+        var city = locationProvider.currentLocationName!.locality;
+        if (city != null) {
+          Provider.of<WeatherServiceProvider>(context, listen: false)
+              .fetchWeatherDateByCity(city);
+        }
+      }
+    });
+
+    // Provider.of<LocationProvider>(context, listen: false).determinePosition();
+    // Provider.of<WeatherServiceProvider>(context, listen: false)
+    //     .fetchWeatherDateByCity("dubai");
 
     super.initState();
   }
@@ -26,6 +40,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    final locationProvider = Provider.of<LocationProvider>(context);
+    final weatherProvider = Provider.of<WeatherServiceProvider>(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -37,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage(background[0]),
+          image: AssetImage(weatherProvider.weather!.weather![0].main ?? "N/A"),
         )),
         child: Stack(children: [
           SizedBox(
@@ -118,30 +135,41 @@ class _HomePageState extends State<HomePage> {
                   ))
               : Container(),
           Align(
-              alignment: Alignment(0, -0.7), child: Image.asset(imagePath[6])),
+              alignment: Alignment(0, -0.7),
+              child: Image.asset(imagePath[
+                      weatherProvider.weather!.weather![0].main ?? "N/A"] ??
+                  "assets/img/drizzle.png")),
           Align(
             alignment: Alignment(0, 0),
             child: SizedBox(
-              height: 130,
+              height: 150,
               width: 130,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AppText(
-                    data: '21 °C ',
+                    data:
+                        "${weatherProvider.weather!.main!.temp?.toStringAsFixed(0)}\u00B0 C",
                     color: Colors.white,
                     fw: FontWeight.bold,
                     size: 32,
                   ),
                   AppText(
-                    data: 'Cloudy',
+                    data: weatherProvider.weather!.weather![0].main,
+                    color: Colors.white,
+                    fw: FontWeight.w600,
+                    size: 22,
+                  ),
+                  AppText(
+                    data: "",
                     color: Colors.white,
                     fw: FontWeight.w600,
                     size: 26,
                   ),
                   AppText(
-                    data: DateTime.now().toString(),
+                    data: DateFormat("hh:mm:a").format(DateTime.now()),
                     color: Colors.white,
+                    fw: FontWeight.w600,
                     size: 16,
                   )
                 ],
