@@ -41,6 +41,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+    TextEditingController _cityController = TextEditingController();
+    @override
+    void dispose() {
+      _cityController.dispose();
+      super.dispose();
+    }
+
     final locationProvider = Provider.of<LocationProvider>(context);
     final weatherProvider = Provider.of<WeatherServiceProvider>(context);
 
@@ -53,6 +60,9 @@ class _HomePageState extends State<HomePage> {
     DateTime sunsetDateTime =
         DateTime.fromMicrosecondsSinceEpoch(sunsetTimeStap);
 
+    String formattedSunrise = DateFormat.Hm().format(sunriseDateTime);
+    String formattedSunset = DateFormat.Hm().format(sunsetDateTime);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
@@ -63,7 +73,9 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage(weatherProvider.weather!.weather![0].main ?? "N/A"),
+          image: AssetImage(
+              background[weatherProvider.weather?.weather![0].main ?? "N/A"] ??
+                  "assets/img/clouds.jpg"),
         )),
         child: Stack(children: [
           SizedBox(
@@ -125,29 +137,11 @@ class _HomePageState extends State<HomePage> {
                   ],
                 );
               })),
-          _clicked == true
-              ? Positioned(
-                  top: 50,
-                  left: 20,
-                  right: 20,
-                  child: SizedBox(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ))
-              : Container(),
           Align(
               alignment: Alignment(0, -0.7),
               child: Image.asset(imagePath[
                       weatherProvider.weather?.weather![0].main ?? "N/A"] ??
-                  "assets/img/drizzle.png")),
+                  "assets/img/snow.png")),
           Align(
             alignment: Alignment(0, 0),
             child: SizedBox(
@@ -197,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Row(
                         children: [
@@ -262,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.white,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Row(
                         children: [
@@ -281,8 +275,7 @@ class _HomePageState extends State<HomePage> {
                                 size: 14,
                               ),
                               AppText(
-                                data:
-                                    "${weatherProvider.weather?.sys?.sunrise ?? "N/A"}",
+                                data: "${formattedSunrise}AM",
                                 color: Colors.white,
                                 fw: FontWeight.w600,
                                 size: 14,
@@ -302,13 +295,13 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AppText(
-                                data: 'Temp Min',
+                                data: 'Sunset',
                                 color: Colors.white,
                                 fw: FontWeight.w600,
                                 size: 14,
                               ),
                               AppText(
-                                data: ' 21 °C ',
+                                data: "${formattedSunset}PM",
                                 color: Colors.white,
                                 fw: FontWeight.w600,
                                 size: 14,
@@ -322,7 +315,39 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-          )
+          ),
+          _clicked == true
+              ? Positioned(
+                  top: 50,
+                  left: 20,
+                  right: 20,
+                  child: SizedBox(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _cityController,
+                            decoration: InputDecoration(
+                              hintText: "Search by city",
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              weatherProvider
+                                  .fetchWeatherDateByCity(_cityController.text);
+                            },
+                            icon: Icon(Icons.search))
+                      ],
+                    ),
+                  ))
+              : Container(),
         ]),
       ),
     );
